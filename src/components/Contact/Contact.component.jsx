@@ -8,9 +8,7 @@ const Contact = ({ user, showDialog, deleteContact }) => {
 
     const { name, email, phone, id } = user;
 
-    const edit = () => {
-        
-    }
+    
     return (
         <Fragment>
             <Card className={classes.root}>

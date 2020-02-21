@@ -55,6 +55,9 @@ function App() {
         setContacts(newContacts);
     }
 
+    const editContact = id => {
+        
+    }
   return (
     <div className="App">
         <AppBar position="static">
@@ -64,12 +67,23 @@ function App() {
         <Container maxWidth="lg" className={classes.container}>
             {
                 contacts.map(contact => (
-                    <Contact key={contact.id} user={contact} showDialog={handleClickOpen} deleteContact={deleteContact}/>
+                    <Contact
+                        key={contact.id}
+                        user={contact}
+                        showDialog={handleClickOpen}
+                        deleteContact={deleteContact}
+                        editContact={editContact}
+                    />
                 ))
             }
         </Container>
         {
-            open ? <Form close={handleClickClose} createContact={createContact}/> : null
+            open ?
+                <Form
+                    close={handleClickClose}
+                    createContact={createContact}
+                />
+            : null
         }
     </div>
   );
