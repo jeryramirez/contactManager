@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-
+import Contact from './components/Contact/Contact.component';
+import { AppBar, Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+const styles = makeStyles({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around'
+    }
+});
 function App() {
+
+    const classes = styles();
+
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        const apiCall = async () => {
+            const url = 'https://jsonplaceholder.typicode.com/users';
+            const res = await fetch(url);
+            const users = await res.json();
+            setUsers(users);
+        }
+        
+        apiCall();
+
+    }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+          
+        <AppBar position="static">
+            <h1>CONTACT MANAGER</h1>
+        </AppBar>
+        
+        <Container maxWidth="lg" className={classes.container}>
+              {
+                users.map(user => (
+                    <Contact user={user}/>
+                ))
+            }
+        </Container>
     </div>
   );
 }
