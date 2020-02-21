@@ -17,7 +17,7 @@ function App() {
 
     const classes = styles();
 
-    const [users, setUsers] = useState([])
+    
 
     const [open, setOpen] = useState(false);
 
@@ -29,44 +29,49 @@ function App() {
         setOpen(false);
     };
 
+    const [contacts, setContacts] = useState([])
+
     useEffect(() => {
         const apiCall = async () => {
             const url = 'https://jsonplaceholder.typicode.com/users';
             const res = await fetch(url);
-            const users = await res.json();
-            setUsers(users);
+            const contacts = await res.json();
+            setContacts(contacts);
         }
         
         apiCall();
 
     }, []);
 
-    const addContact = contact => {
-        setUsers([
-            ...users,
+    const createContact = contact => {
+        setContacts([
+            ...contacts,
             contact
         ]);
     }
 
+    const deleteContact = id => {
+        const newContacts = contacts.filter(contact => contact.id != id);
+        setContacts(newContacts);
+    }
+
   return (
     <div className="App">
-          
         <AppBar position="static">
             <h1>CONTACT MANAGER</h1>
         </AppBar>
           <Add showDialog={handleClickOpen}/>
         <Container maxWidth="lg" className={classes.container}>
-              {
-                users.map(user => (
-                    <Contact key={user.id} user={user} showDialog={handleClickOpen} />
+            {
+                contacts.map(contact => (
+                    <Contact key={contact.id} user={contact} showDialog={handleClickOpen} deleteContact={deleteContact}/>
                 ))
             }
         </Container>
         {
-              open ? <Form close={handleClickClose} addContact={addContact}/> : null
+            open ? <Form close={handleClickClose} createContact={createContact}/> : null
         }
     </div>
   );
 }
-
 export default App;

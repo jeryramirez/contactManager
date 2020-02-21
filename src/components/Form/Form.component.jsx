@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, TextField, DialogContent, DialogActions, Button } 
 import uuid from 'uuid/v4';
 import Contact from '../Contact/Contact.component'
 
-const Form = ({close}) => {
+const Form = ({close, createContact}) => {
 
     const [contact, setContact] = useState({
         name: '',
@@ -13,7 +13,8 @@ const Form = ({close}) => {
 
 
     const [error, setError] = useState(false);
-    const createContact = e => {
+
+    const updateContact = e => {
         setContact({
             ...contact,
             [e.target.name]: e.target.value
@@ -31,14 +32,14 @@ const Form = ({close}) => {
         }
         setError(false);
         
-        //asignar id
+        //add id
         contact.id = uuid();
-        
-        //crear contacto
 
-        //cerrar dialog
+        //create contact
+        createContact(contact);
 
-        //mostrar
+        //close form
+        close();
     }
 
     return ( 
@@ -52,7 +53,7 @@ const Form = ({close}) => {
                         name="name"
                         label="Contact Name"
                         type="text"
-                        onChange={createContact}
+                        onChange={updateContact}
                         value={name}
                         fullWidth
                     />
@@ -61,7 +62,7 @@ const Form = ({close}) => {
                         name="phone"
                         label="Phone Number"
                         type="text"
-                        onChange={createContact}
+                        onChange={updateContact}
                         value={phone}
                         fullWidth
                     />
@@ -70,7 +71,7 @@ const Form = ({close}) => {
                         name="email"
                         label="Email Address"
                         type="email"
-                        onChange={createContact}
+                        onChange={updateContact}
                         value={email}
                         fullWidth
                     />
