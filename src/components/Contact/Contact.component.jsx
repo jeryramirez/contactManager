@@ -3,35 +3,33 @@ import { Card, Button } from '@material-ui/core';
 import Form from '../Form/Form.component'
 import styles from './Contact.styles';
 
-const Contact = ({ user }) => {
+const Contact = ({ user, showDialog }) => {
     const classes = styles();
 
-    const [open, setOpen] = React.useState(false);
+    const { name, email, phone, id } = user;
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClickClose = () => {
-        setOpen(false);
-    };
-
+    const edit = () => {
+        
+    }
     return (
         <Fragment>
             <Card className={classes.root}>
-                <h3> {user.name}</h3>
-                <p> {user.email}</p>
-                <p> {user.phone}</p>
-                <Button color='primary' onClick={handleClickOpen}>
-                    edit
-                </Button>
-                <Button color='primary'>
-                    delete
-                </Button>
+                <h3> {name}</h3>
+                <div>
+                    <p> {email}</p>
+                    <p> {phone}</p>
+                </div>
+
+                <div>
+                    <Button color='primary' onClick={showDialog}>
+                        edit
+                    </Button>
+                    <Button color='primary'>
+                        delete
+                    </Button>
+                </div>
+
             </Card>
-            {
-                open ? <Form close={handleClickClose}/> : null
-            }
         </Fragment>
     )
 }
