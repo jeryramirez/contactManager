@@ -113,7 +113,7 @@ function App() {
   return (
     <div className="App">
         <AppBar position="static">
-            <h1>CONTACT MANAGER</h1>
+            <h2>CONTACT MANAGER</h2>
           </AppBar>
           {
             alert.status ?
