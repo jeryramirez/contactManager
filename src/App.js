@@ -26,10 +26,25 @@ function App() {
     };
 
     const handleClickClose = () => {
+        setContact({
+            name: '',
+            phone: '',
+            email: '',
+            id: ''
+        })
         setOpen(false);
     };
 
+    //API
     const [contacts, setContacts] = useState([])
+
+    //LOCAL
+    const [contact, setContact] = useState({
+        name: '',
+        phone: '',
+        email: '',
+        id: ''
+    });
 
     useEffect(() => {
         const apiCall = async () => {
@@ -51,13 +66,21 @@ function App() {
     }
 
     const deleteContact = id => {
-        const newContacts = contacts.filter(contact => contact.id != id);
+        const newContacts = contacts.filter(contact => contact.id !== id);
         setContacts(newContacts);
     }
 
-    const editContact = id => {
-        
+    const editContact = newContact => {
+        handleClickOpen();
+        const { name, phone, email, id } = newContact;
+        setContact({
+            name: name,
+            phone: phone,
+            email: email,
+            id: id
+        });
     }
+
   return (
     <div className="App">
         <AppBar position="static">
@@ -70,7 +93,6 @@ function App() {
                     <Contact
                         key={contact.id}
                         user={contact}
-                        showDialog={handleClickOpen}
                         deleteContact={deleteContact}
                         editContact={editContact}
                     />
@@ -82,6 +104,7 @@ function App() {
                 <Form
                     close={handleClickClose}
                     createContact={createContact}
+                    eContact={contact}  
                 />
             : null
         }

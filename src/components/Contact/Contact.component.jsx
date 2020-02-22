@@ -1,9 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import { Card, Button } from '@material-ui/core';
-import Form from '../Form/Form.component'
 import styles from './Contact.styles';
 
-const Contact = ({ user, showDialog, deleteContact }) => {
+const Contact = ({ user, deleteContact, editContact }) => {
     const classes = styles();
 
     const { name, email, phone, id } = user;
@@ -17,16 +16,14 @@ const Contact = ({ user, showDialog, deleteContact }) => {
                     <p> {email}</p>
                     <p> {phone}</p>
                 </div>
-
                 <div>
-                    <Button color='primary' onClick={showDialog}>
+                    <Button color='primary' onClick={() => editContact(user)}>
                         edit
                     </Button>
                     <Button color='primary' onClick={ () => deleteContact(id)}>
                         delete
                     </Button>
                 </div>
-
             </Card>
         </Fragment>
     )

@@ -1,17 +1,16 @@
 import React, {useState} from 'react'
 import { Dialog, DialogTitle, TextField, DialogContent, DialogActions, Button } from '@material-ui/core';
 import uuid from 'uuid/v4';
-import Contact from '../Contact/Contact.component'
 
-const Form = ({close, createContact}) => {
-
+const Form = ({close, createContact, eContact}) => {
+    //eContact is a object similar to contact used to edit
     const [contact, setContact] = useState({
-        name: '',
-        phone: '',
-        email: ''
+        name: eContact.name,
+        phone: eContact.phone,
+        email: eContact.email,
+        id: eContact.id
     });
-
-
+    
     const [error, setError] = useState(false);
 
     const updateContact = e => {
@@ -22,7 +21,6 @@ const Form = ({close, createContact}) => {
     }
 
     const { name, phone, email } = contact;
- 
 
     const addContact = () => {
         //validar
@@ -38,13 +36,22 @@ const Form = ({close, createContact}) => {
         //create contact
         createContact(contact);
 
+        //clear form
+
         //close form
+
+        closeForm();
+    }
+
+    const closeForm = () => {
         close();
     }
 
     return ( 
         <Dialog open={true} onClose={close} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Create a new contact</DialogTitle>
+            <DialogTitle id="form-dialog-title">
+                {eContact.id === '' ? 'Create a new contact' : 'Modify contact'}
+            </DialogTitle>
                 {error ? console.log('campos vacios') : null}
                 <DialogContent>
                     <TextField
@@ -75,19 +82,17 @@ const Form = ({close, createContact}) => {
                         value={email}
                         fullWidth
                     />
-                    
                 </DialogContent>
             <DialogActions>
             <Button onClick={addContact} color="primary">
-                create
+                {eContact.id === '' ? 'create' : 'modify' }
             </Button>
-            <Button onClick={close} color="primary">
+            <Button onClick={closeForm} color="primary">
                 cancel
             </Button>
             </DialogActions>
         </Dialog>
-
-     );
+    );
 }
  
 export default Form;
