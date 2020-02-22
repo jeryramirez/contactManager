@@ -40,14 +40,8 @@ const Form = ({close, createContact, eContact, editContact}) => {
         if (id) {
             editContact(contact)
         } else {
-            //add id
             contact.id = uuid();
-
-            //create contact
             createContact(contact);
-
-            //close form
-            close();
         }
         
     }

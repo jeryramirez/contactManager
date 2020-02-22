@@ -3,6 +3,7 @@ import './App.css';
 import Contact from './components/Contact/Contact.component';
 import Add from './components/Add/Add.component';
 import Form from './components/Form/Form.component';
+import { Alert } from '@material-ui/lab';
 import { AppBar, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 const styles = makeStyles({
@@ -17,9 +18,10 @@ function App() {
 
     const classes = styles();
 
-    
-
     const [open, setOpen] = useState(false);
+    const [alert, setAlert] = useState({
+        status: ''
+    })
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -63,6 +65,15 @@ function App() {
             ...contacts,
             contact
         ]);
+        handleClickClose();
+        setAlert({
+            status: 'success'
+        })
+        setTimeout(() => {
+            setAlert({
+                status: ''
+            })
+        }, 3000);
     }
 
     const deleteContact = id => {
@@ -88,14 +99,29 @@ function App() {
             ...newContacts,
             contactEdited
         ]);
+        setAlert({
+            status: 'info'
+        })
+        setTimeout(() => {
+            setAlert({
+                status: ''
+            })
+        }, 3000);
+        handleClickClose();
     }
 
   return (
     <div className="App">
         <AppBar position="static">
             <h1>CONTACT MANAGER</h1>
-        </AppBar>
-          <Add showDialog={handleClickOpen}/>
+          </AppBar>
+          {
+            alert.status ?
+                <Alert variant="filled" severity={alert.status}>
+                      {alert.status === 'success' ? 'Contact created success' : 'Contact modified success'}
+                </Alert>
+            : null
+          }
         <Container maxWidth="lg" className={classes.container}>
             {
                 contacts.map(contact => (
@@ -107,7 +133,8 @@ function App() {
                     />
                 ))
             }
-        </Container>
+          </Container>
+          <Add showDialog={handleClickOpen}/>
         {
             open ?
                 <Form
@@ -117,6 +144,9 @@ function App() {
                     editContact={editContact}
                 />
             : null
+        }
+        {
+            
         }
     </div>
   );
