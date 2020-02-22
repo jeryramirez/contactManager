@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { Dialog, DialogTitle, TextField, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import uuid from 'uuid/v4';
 
 const Form = ({close, createContact, eContact, editContact}) => {
@@ -25,7 +26,12 @@ const Form = ({close, createContact, eContact, editContact}) => {
     const addContact = () => {
         //validar
         if (name.trim() === '' || phone.trim() === '' || email.trim() === '') {
+            
             setError(true);
+
+            setTimeout(() => {
+                setError(false);
+            }, 3000);
             return 
         }
 
@@ -50,8 +56,11 @@ const Form = ({close, createContact, eContact, editContact}) => {
             <DialogTitle id="form-dialog-title">
                 {eContact.id === '' ? 'Create a new contact' : 'Modify contact'}
             </DialogTitle>
-                {error ? console.log('campos vacios') : null}
-                <DialogContent>
+                
+            <DialogContent>
+                {
+                    error ? <Alert variant="filled" severity="error">all field are required </Alert>: null
+                }
                     <TextField
                         autoFocus
                         margin="dense"
