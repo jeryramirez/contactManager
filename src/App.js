@@ -70,7 +70,7 @@ function App() {
         setContacts(newContacts);
     }
 
-    const editContact = newContact => {
+    const loadContact = newContact => {
         handleClickOpen();
         const { name, phone, email, id } = newContact;
         setContact({
@@ -79,6 +79,15 @@ function App() {
             email: email,
             id: id
         });
+    }
+
+    const editContact = async (contactEdited) => {
+        const newContacts = contacts.filter(contact => contact.id !== contactEdited.id);
+        setContacts(newContacts);
+        setContacts([
+            ...newContacts,
+            contactEdited
+        ]);
     }
 
   return (
@@ -94,7 +103,7 @@ function App() {
                         key={contact.id}
                         user={contact}
                         deleteContact={deleteContact}
-                        editContact={editContact}
+                        loadContact={loadContact}
                     />
                 ))
             }
@@ -104,7 +113,8 @@ function App() {
                 <Form
                     close={handleClickClose}
                     createContact={createContact}
-                    eContact={contact}  
+                    eContact={contact}
+                    editContact={editContact}
                 />
             : null
         }

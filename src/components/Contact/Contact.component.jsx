@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import { Card, Button } from '@material-ui/core';
 import styles from './Contact.styles';
 
-const Contact = ({ user, deleteContact, editContact }) => {
+const Contact = ({ user, deleteContact, loadContact }) => {
     const classes = styles();
 
     const { name, email, phone, id } = user;
@@ -17,7 +17,7 @@ const Contact = ({ user, deleteContact, editContact }) => {
                     <p> {phone}</p>
                 </div>
                 <div>
-                    <Button color='primary' onClick={() => editContact(user)}>
+                    <Button color='primary' onClick={() => loadContact(user)}>
                         edit
                     </Button>
                     <Button color='primary' onClick={ () => deleteContact(id)}>

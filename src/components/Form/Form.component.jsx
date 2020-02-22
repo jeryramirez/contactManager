@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import { Dialog, DialogTitle, TextField, DialogContent, DialogActions, Button } from '@material-ui/core';
 import uuid from 'uuid/v4';
 
-const Form = ({close, createContact, eContact}) => {
+const Form = ({close, createContact, eContact, editContact}) => {
     //eContact is a object similar to contact used to edit
     const [contact, setContact] = useState({
         name: eContact.name,
@@ -20,32 +20,33 @@ const Form = ({close, createContact, eContact}) => {
         });
     }
 
-    const { name, phone, email } = contact;
+    const { name, phone, email, id } = contact;
 
     const addContact = () => {
         //validar
         if (name.trim() === '' || phone.trim() === '' || email.trim() === '') {
             setError(true);
-            return
+            return 
         }
+
         setError(false);
         
-        //add id
-        contact.id = uuid();
+        if (id) {
+            editContact(contact)
+        } else {
+            //add id
+            contact.id = uuid();
 
-        //create contact
-        createContact(contact);
+            //create contact
+            createContact(contact);
 
-        //clear form
-
-        //close form
-
-        closeForm();
+            //close form
+            close();
+        }
+        
     }
 
-    const closeForm = () => {
-        close();
-    }
+        
 
     return ( 
         <Dialog open={true} onClose={close} aria-labelledby="form-dialog-title">
@@ -87,7 +88,7 @@ const Form = ({close, createContact, eContact}) => {
             <Button onClick={addContact} color="primary">
                 {eContact.id === '' ? 'create' : 'modify' }
             </Button>
-            <Button onClick={closeForm} color="primary">
+            <Button onClick={close} color="primary">
                 cancel
             </Button>
             </DialogActions>
