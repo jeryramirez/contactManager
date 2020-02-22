@@ -5,8 +5,12 @@ import styles from './Contact.styles';
 const Contact = ({ user, deleteContact, loadContact }) => {
     const classes = styles();
 
-    const { name, email, phone, id } = user;
+    let { name, email, phone, id } = user;
 
+    const index = phone.indexOf('x');
+    if (index != -1) {
+        phone = phone.substring(0, index - 1)
+    }
     
     return (
         <Fragment>

@@ -45,9 +45,6 @@ const Form = ({close, createContact, eContact, editContact}) => {
         }
         
     }
-
-        
-
     return ( 
         <Dialog open={true} onClose={close} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">
